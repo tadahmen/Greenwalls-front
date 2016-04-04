@@ -1,9 +1,13 @@
 import React from 'react';
+import PlantMenu from './PlantMenu';
 
 class App extends React.Component {
     render() {
         return (
-            <h1>Hello World!</h1>
+          <div className="container master">
+            <PlantMenu />   {/*only temporary to test PlantMenu*/}
+            {/*{this.props.children}*/}
+          </div>
         );
     }
 }
