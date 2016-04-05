@@ -25,8 +25,8 @@ class PlantMenu extends React.Component {
 
   pastePicture(event) {
     // event.preventDefault();
-    console.log(event);
-    document.getElementsByClassName('plantSpot')[0].setAttribute("src", event);
+    document.getElementsByClassName('plantSpot')[event.plantSpot].setAttribute("src", event.picture);
+    console.log(event.name)
   }
 
   componentDidMount() {
@@ -39,10 +39,15 @@ class PlantMenu extends React.Component {
       <div>
         <p>plants:</p>
         <ul>
-            {this.state.plants.map(function(plant, i){
-              return(<button onClick={this.pastePicture.bind(this, plant.picture)}> {plant.name} </button>);
+            {
+              this.state.plants.map(function(plant, i){
+              return(<li> <button onClick={
+                this.pastePicture.bind(this, {picture: plant.picture, plantSpot: 1})
+                // console.log("dit wordt ook nog uitgevoerd!")
+              }> {plant.name} </button></li>);
             }, this)}
         </ul>
+        <img className="plantSpot" src="https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"/>
         <img className="plantSpot" src="https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"/>
       </div>
     );
