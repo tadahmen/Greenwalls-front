@@ -26,8 +26,7 @@ class PlantSpot extends React.Component {
   // }
 
   selectSpot(event) {
-    console.log("event is:" + event)
-    console.log("plantspot before setState: " + this.state.plantSpot);
+    console.log("event is:" + event);
     this.setState({plantSpot: event});
     console.log("plantspot after setState: " + this.state.plantSpot)
   }
