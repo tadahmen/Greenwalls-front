@@ -1,11 +1,11 @@
 import React from 'react';
-import PlantMenu from './PlantMenu';
+import PlantSpot from './PlantSpot';
 
 class App extends React.Component {
     render() {
         return (
           <div className="container master">
-            <PlantMenu />   {/*only temporary to test PlantMenu*/}
+            <PlantSpot />   {/*only temporary to test PlantSpot*/}
             {/*{this.props.children}*/}
           </div>
         );
