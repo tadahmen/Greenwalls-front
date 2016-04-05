@@ -2,7 +2,7 @@ import React from 'react';
 import jQuery from 'jquery';
 import PlantMenu from './PlantMenu';
 
-class PlantSpot extends React.Component {
+class PlantSpots extends React.Component {
   constructor() {
     super()
 
@@ -17,7 +17,7 @@ class PlantSpot extends React.Component {
   //   let component = this;
   //   let plantContainerId = this.props.params.plantContainerId;
   //
-  //   jQuery.getJSON(`http://localhost:5000/${plantContainerId}/plant_spots`, function(data) {
+  //   jQuery.getJSON(`http://localhost:5000/plants_containers/:plants_container_id/plant_spots/:id(.:format)`, function(data) {
   //     console.log(data);
   //     component.setState({
   //       plantSpots: data.plant_spots
@@ -56,4 +56,4 @@ class PlantSpot extends React.Component {
   }
 }
 
-export default PlantSpot;
+export default PlantSpots;
