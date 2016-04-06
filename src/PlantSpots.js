@@ -33,7 +33,7 @@ class PlantSpots extends React.Component {
     console.log("plantspot after setState: " + this.state.plantSpot)
   }
 
-  componentDidMount() {
+  componentWillReceiveProps() {
     console.log("didMount");
     this.reloadPlantSpots();
   }
@@ -44,6 +44,7 @@ class PlantSpots extends React.Component {
         <PlantMenu plantSpot={this.state.plantSpot}/>
         <p>plantscontainer: {this.props.plantsContainerName}</p>
         <div>
+            {/*{onChange={this.reloadPlantSpots.bind(this)}},*/}
             {
               this.state.plantSpots.map(function(plantSpot, i){
                 return(
@@ -52,7 +53,7 @@ class PlantSpots extends React.Component {
                   </button>);
               }, this)
             }
-            </div>
+          </div>
       </div>
     );
   }
