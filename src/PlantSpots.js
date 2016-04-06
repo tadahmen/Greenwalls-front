@@ -13,17 +13,19 @@ class PlantSpots extends React.Component {
     }
   }
 
-  // reloadPlantSpots(event) {
-  //   let component = this;
-  //   let plantContainerId = this.props.params.plantContainerId;
-  //
-  //   jQuery.getJSON(`http://localhost:5000/plants_containers/:plants_container_id/plant_spots/:id(.:format)`, function(data) {
-  //     console.log(data);
-  //     component.setState({
-  //       plantSpots: data.plant_spots
-  //     });
-  //   })
-  // }
+  reloadPlantSpots(event) {
+    let component = this;
+    // let plantsContainerId = this.props.params.plantsContainerId;
+
+    // console.log(this.props);
+    // jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
+    //   console.log(data);
+    //   component.setState({
+    //     plantSpots: data.plant_spots,
+    //     count: data.meta.count
+    //   });
+    // })
+  }
 
   selectSpot(event) {
     console.log("event is:" + event);
@@ -31,10 +33,10 @@ class PlantSpots extends React.Component {
     console.log("plantspot after setState: " + this.state.plantSpot)
   }
 
-  // componentDidMount() {
-  //   console.log("didMount");
-  //   this.reloadPlants();
-  // }
+  componentDidMount() {
+    console.log("didMount");
+    this.reloadPlantSpots();
+  }
 
   render(){
     return(

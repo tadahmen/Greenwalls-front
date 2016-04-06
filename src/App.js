@@ -1,11 +1,11 @@
 import React from 'react';
-import PlantSpots from './PlantSpots';
+import PlantsContainerList from './PlantsContainerList';  //only for testing that component
 
 class App extends React.Component {
     render() {
         return (
           <div className="container master">
-            <PlantSpots />   {/*only temporary to test PlantSpots*/}
+            <PlantsContainerList />   {/*only temporary to test that component*/}
             {/*{this.props.children}*/}
           </div>
         );
