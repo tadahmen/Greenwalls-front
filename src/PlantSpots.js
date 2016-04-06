@@ -15,16 +15,16 @@ class PlantSpots extends React.Component {
 
   reloadPlantSpots(event) {
     let component = this;
-    // let plantsContainerId = this.props.params.plantsContainerId;
+    let plantsContainerId = this.props.plantsContainerId;
+    console.log("containerId in reloadPlantSpots:" + this.props.plantsContainerId);
 
-    // console.log(this.props);
-    // jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
-    //   console.log(data);
-    //   component.setState({
-    //     plantSpots: data.plant_spots,
-    //     count: data.meta.count
-    //   });
-    // })
+    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
+      console.log("plantspots in container:" + data);
+      component.setState({
+        plantSpots: data.plant_spots,
+        count: data.meta.count
+      });
+    })
   }
 
   selectSpot(event) {
@@ -42,7 +42,7 @@ class PlantSpots extends React.Component {
     return(
       <div>
         <PlantMenu plantSpot={this.state.plantSpot}/>
-        <p>plantspots:</p>
+        <p>plantscontainer: {this.props.plantsContainerName}</p>
         <div>
             {
               this.state.plantSpots.map(function(plantSpot, i){

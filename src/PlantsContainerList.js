@@ -8,7 +8,9 @@ class PlantsContainerList extends React.Component {
 
     this.state = {
       plantsContainers: [{}],
-      count: 0,
+      plantsContainerId: "",
+      plantsContainerName: "",
+      count: 0
     }
   }
 
@@ -29,27 +31,38 @@ class PlantsContainerList extends React.Component {
     this.reloadPlantsContainers();
   }
 
-  log(event) {
-    console.log("clicked container")
+  displayContainer(event) {
+    console.log("event is plantsContainerId:" + event.id);
+    this.setState({
+      plantsContainerId: event.id,
+      plantsContainerName: event.name
+    });
+    console.log("plantsContainerId is:" + this.state.plantsContainerId)
   }
 
   render(){
     return(
       <div>
         <p>plantcontainers:</p>
+        <p>plantsContainerId is: {this.state.plantsContainerId}</p>
           <ul>
             {
               this.state.plantsContainers.map(function(plantsContainer, i){
                 return(
-                  // <li className="plantsContainer">
-                    <button onClick={this.log.bind(this)}> {/*this.log.bind(this)*/}
-                     {plantsContainer.name}
+                    <button onClick={this.displayContainer.bind(this, plantsContainer)} >
+                      {plantsContainer.name}
                     </button>
-                  // </li>
                 );
-            }, this)
-          }
+              }, this)
+            }
           </ul>
+          <p>plantsContainerId is: {this.state.plantsContainerId}</p>
+          <div>
+            {
+              this.state.plantsContainerId !== "" ? <PlantSpots className="placeHolder" plantsContainerId={this.state.plantsContainerId} plantsContainerName={this.state.plantsContainerName}/>
+              : <p>Choose a plantcontainer</p>
+            }
+          </div>
       </div>
     );
   }
