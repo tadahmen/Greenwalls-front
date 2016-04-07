@@ -9,17 +9,17 @@ class PlantSpots extends React.Component {
     this.state = {
       plantSpots: [{x_position:"0"}, {x_position:"1"}, {x_position:"2"}],
       count: 3,
-      plantSpot: 1
+      plantSpot: ""
     }
   }
 
-  reloadPlantSpots(event) {
+  reloadPlantSpots(plantsContainerId) {
     let component = this;
-    let plantsContainerId = this.props.plantsContainerId;
-    console.log("containerId in reloadPlantSpots:" + this.props.plantsContainerId);
+    console.log("containerId for loading PlantSpots:" + plantsContainerId);
+    console.log("this.props.plantsContainerId: " + this.props.plantsContainerId);
 
     jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
-      console.log("plantspots in container:" + data);
+      console.log("loaded plantspots: " + data);
       component.setState({
         plantSpots: data.plant_spots,
         count: data.meta.count
@@ -33,18 +33,26 @@ class PlantSpots extends React.Component {
     console.log("plantspot after setState: " + this.state.plantSpot)
   }
 
-  componentWillReceiveProps() {
-    console.log("didMount");
-    this.reloadPlantSpots();
+  componentDidMount() {
+    console.log("PlantSpots did Mount");
+    this.reloadPlantSpots(this.props.plantsContainerId);
+  }
+
+  componentWillReceiveProps(nextProps) {  //so it refreshes each time another plantscontainer is selected, and uses the newest props
+    this.setState({
+      plantSpot: "",
+      plantsContainerId: nextProps.plantsContainerId
+    });
+    this.reloadPlantSpots(nextProps.plantsContainerId);
+    console.log("PlantSpots did reload");
   }
 
   render(){
     return(
       <div>
         <PlantMenu plantSpot={this.state.plantSpot}/>
-        <p>plantscontainer: {this.props.plantsContainerName}</p>
+        <p>Plantcontainer: {this.props.plantsContainerName}</p>
         <div>
-            {/*{onChange={this.reloadPlantSpots.bind(this)}},*/}
             {
               this.state.plantSpots.map(function(plantSpot, i){
                 return(

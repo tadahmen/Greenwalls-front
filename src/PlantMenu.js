@@ -6,16 +6,16 @@ class PlantMenu extends React.Component {
     super()
 
     this.state = {
-      plants: [{name:"grass"}, {name:"roos"}, {name:"tulp"}]
+      plants: [{name:"grass"}, {name:"roos"}, {name:"tulp"}]  //if data cannot be loaded from db
+      //also put some pictures here (for same reason)
     }
   }
 
   reloadPlants(event) {
-    console.log("didLoad")
     let component = this;
 
     jQuery.getJSON(`http://localhost:5000/plants`, function(data) {
-      console.log(data);
+      console.log("loaded Plantlist: " + data);
       component.setState({
         plants: data.plants
       });
@@ -28,8 +28,8 @@ class PlantMenu extends React.Component {
   }
 
   componentDidMount() {
-    console.log("didMount");
     this.reloadPlants();
+    console.log("PlantMenu did mount");
   }
 
   render(){

@@ -18,7 +18,7 @@ class PlantsContainerList extends React.Component {
     let component = this;
 
     jQuery.getJSON(`http://localhost:5000/plants_containers`, function(data) {
-      console.log(data);
+      console.log("loaded containerlist: " + data);
       component.setState({
         plantsContainers: data.plants_containers,
         count: data.meta.count
@@ -27,40 +27,45 @@ class PlantsContainerList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("didMount");
+    console.log("ContainerList did Mount");
     this.reloadPlantsContainers();
   }
 
-  displayContainer(event) {
-    console.log("event is plantsContainerId:" + event.id);
-    this.setState({
+  renderPlantSpots(plantsContainerId, plantsContainerName){
+    return<PlantSpots className="placeHolder" plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName}/>;
+  }
+
+  setContainerId(event) {
+    console.log("new plantsContainerId:" + event.id);
+    let newState = {
       plantsContainerId: event.id,
       plantsContainerName: event.name
-    });
-    console.log("plantsContainerId is:" + this.state.plantsContainerId)
+    };
+    this.setState(newState);
+    console.log("plantsContainerId after setState is:" + this.state.plantsContainerId)
   }
 
   render(){
     return(
       <div>
         <p>plantcontainers:</p>
-        <p>plantsContainerId is: {this.state.plantsContainerId}</p>
           <ul>
             {
               this.state.plantsContainers.map(function(plantsContainer, i){
                 return(
-                    <button onClick={this.displayContainer.bind(this, plantsContainer)} >
+                    <button onClick={this.setContainerId.bind(this, plantsContainer)} >
                       {plantsContainer.name}
                     </button>
                 );
               }, this)
             }
           </ul>
-          <p>plantsContainerId is: {this.state.plantsContainerId}</p>
+          
           <div>
             {
-              this.state.plantsContainerId !== "" ? <PlantSpots className="placeHolder" plantsContainerId={this.state.plantsContainerId} plantsContainerName={this.state.plantsContainerName}/>
-              : <p>Choose a plantcontainer</p>
+              this.state.plantsContainerId !== ""
+                ? this.renderPlantSpots(this.state.plantsContainerId, this.state.plantsContainerName)
+                : <p>Choose a plantcontainer</p>
             }
           </div>
       </div>
