@@ -8,7 +8,9 @@ class PlantsContainerList extends React.Component {
 
     this.state = {
       plantsContainers: [{}],
-      count: 0,
+      plantsContainerId: "",
+      plantsContainerName: "",
+      count: 0
     }
   }
 
@@ -16,7 +18,7 @@ class PlantsContainerList extends React.Component {
     let component = this;
 
     jQuery.getJSON(`http://localhost:5000/plants_containers`, function(data) {
-      console.log(data);
+      console.log("loaded containerlist: " + data);
       component.setState({
         plantsContainers: data.plants_containers,
         count: data.meta.count
@@ -25,12 +27,22 @@ class PlantsContainerList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("didMount");
+    console.log("ContainerList did Mount");
     this.reloadPlantsContainers();
   }
 
-  log(event) {
-    console.log("clicked container")
+  renderPlantSpots(plantsContainerId, plantsContainerName){
+    return<PlantSpots className="placeHolder" plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName}/>;
+  }
+
+  setContainerId(event) {
+    console.log("new plantsContainerId:" + event.id);
+    let newState = {
+      plantsContainerId: event.id,
+      plantsContainerName: event.name
+    };
+    this.setState(newState);
+    console.log("plantsContainerId after setState is:" + this.state.plantsContainerId)
   }
 
   render(){
@@ -41,15 +53,21 @@ class PlantsContainerList extends React.Component {
             {
               this.state.plantsContainers.map(function(plantsContainer, i){
                 return(
-                  // <li className="plantsContainer">
-                    <button onClick={this.log.bind(this)}> {/*this.log.bind(this)*/}
-                     {plantsContainer.name}
+                    <button onClick={this.setContainerId.bind(this, plantsContainer)} >
+                      {plantsContainer.name}
                     </button>
-                  // </li>
                 );
-            }, this)
-          }
+              }, this)
+            }
           </ul>
+          
+          <div>
+            {
+              this.state.plantsContainerId !== ""
+                ? this.renderPlantSpots(this.state.plantsContainerId, this.state.plantsContainerName)
+                : <p>Choose a plantcontainer</p>
+            }
+          </div>
       </div>
     );
   }

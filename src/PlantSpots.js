@@ -9,50 +9,75 @@ class PlantSpots extends React.Component {
     this.state = {
       plantSpots: [{x_position:"0"}, {x_position:"1"}, {x_position:"2"}],
       count: 3,
-      plantSpot: 1
+      plantSpotPosition: ""
     }
   }
 
-  reloadPlantSpots(event) {
+  reloadPlantSpots(plantsContainerId) {
     let component = this;
-    // let plantsContainerId = this.props.params.plantsContainerId;
+    console.log("LOADING PLANT SPOTS FROM DB")
+    console.log("containerId for loading PlantSpots:" + plantsContainerId);
+    console.log("id in props is: " + this.props.plantsContainerId); //shows that props still holds previous value
 
-    // console.log(this.props);
-    // jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
-    //   console.log(data);
-    //   component.setState({
-    //     plantSpots: data.plant_spots,
-    //     count: data.meta.count
-    //   });
-    // })
+    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
+      console.log("loaded plantspots: " + data);
+      component.setState({
+        plantSpots: data.plant_spots,
+        count: data.meta.count
+      });
+    })
   }
 
   selectSpot(event) {
-    console.log("event is:" + event);
-    this.setState({plantSpot: event});
-    console.log("plantspot after setState: " + this.state.plantSpot)
+    console.log("SETTING PLANT SPOT TO SELECTED SPOT");
+    console.log("id in selectSpot:" + event.plantSpotId);
+    console.log("position of selected spot (0 for first): " + event.plantSpotPosition);
+    this.setState({
+      plantSpotPosition: event.plantSpotPosition,
+      plantSpotId: event.plantSpotId
+    });
+    console.log("plantspot after setState: " + this.state.plantSpotPosition)
   }
 
+  showSpot(plantSpot) {
+    console.log("plant_id: " + plantSpot.plant_id);
+    // return( plantSpot.plant_id !== "null"
+    //   ? <img className="plantSpot" src={plantSpot.plant.picture}/>
+    //   :
+    return(<img className="plantSpot" src="https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"/>)
+  // )
+    }
+
   componentDidMount() {
-    console.log("didMount");
-    this.reloadPlantSpots();
+    console.log("Mount PlantSpots");
+    this.reloadPlantSpots(this.props.plantsContainerId);
+  }
+
+  componentWillReceiveProps(nextProps) {  //so it refreshes each time another plantscontainer is selected, and uses the newest props
+    console.log("reload PlantSpots");
+    this.setState({
+      plantSpotPosition: "",
+      plantsContainerId: nextProps.plantsContainerId
+    });
+    this.reloadPlantSpots(nextProps.plantsContainerId);
   }
 
   render(){
     return(
       <div>
-        <PlantMenu plantSpot={this.state.plantSpot}/>
-        <p>plantspots:</p>
+        <PlantMenu plantSpotPosition={this.state.plantSpotPosition} plantSpotId={this.state.plantSpotId} plantsContainerId={this.props.plantsContainerId}/>
+        <p>Plantcontainer: {this.props.plantsContainerName}</p>
         <div>
             {
               this.state.plantSpots.map(function(plantSpot, i){
                 return(
-                  <button onClick={this.selectSpot.bind(this, plantSpot.x_position)}>
+                  <button onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
+                    {/*{this.showSpot(plantSpot)}*/}
                     <img className="plantSpot" src="https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"/>
                   </button>);
               }, this)
             }
-            </div>
+          </div>
       </div>
     );
   }
