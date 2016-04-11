@@ -1,3 +1,6 @@
 .plants-container-list {
-  background-color: green;
+  @extends.row;
+  @extends.row-centered;
+  margin-left: auto;
+  margin-right: auto;
 }

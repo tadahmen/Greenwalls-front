@@ -23,9 +23,9 @@ class PlantMenu extends React.Component {
   }
 
   savePlantInSpot(plantSpotId, plantId, plantsContainerId){
-    let newPlant = {     //to ensure the new data are used. (data in this.state could still be the 'old' data)
-      // plant_id: plantId,
-      plants_container_id: 4
+    let spotWithNewPlant = {     //to ensure the new data are used. (data in this.state could still be the 'old' data)
+      plants_container_id: plantsContainerId,
+      plant_id: plantId,
     };
     console.log("SAVING NEW PLANT IN SPOT");
     console.log("id (of plantspot):" + plantSpotId);
@@ -36,7 +36,7 @@ class PlantMenu extends React.Component {
       type: "PUT",
       url:`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots/${plantSpotId}.json`,
       data: JSON.stringify({
-        plant_spot: {plants_container_id: 10}
+        plant_spot: spotWithNewPlant
       }),
       contentType: "application/json",
       dataType: "json"
@@ -58,7 +58,7 @@ class PlantMenu extends React.Component {
     console.log("put picture:" + event.plantPicture + " in spot with position: " + event.plantSpotPosition + ", and with id: " + event.plantSpotId);
     this.putPictureInSpot(event.plantSpotPosition, event.plantPicture);
     // document.getElementsByClassName('plantSpot')[event.plantSpotPosition].setAttribute("src", event.plantPicture);
-    // this.savePlantInSpot(event.plantSpotId, event.plantId, event.plantsContainerId)
+    this.savePlantInSpot(event.plantSpotId, event.plantId, event.plantsContainerId)
   }
 
   componentDidMount() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import jQuery from 'jquery';
+import App from './App';
 import PlantSpots from './PlantSpots';
 
 class PlantsContainerList extends React.Component {
