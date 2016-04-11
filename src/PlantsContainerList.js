@@ -10,12 +10,14 @@ class PlantsContainerList extends React.Component {
       plantsContainers: [{}],
       plantsContainerId: "",
       plantsContainerName: "",
-      count: 0
+      count: 0,
+      plants: []
     }
   }
 
   reloadPlantsContainers(event) {
     let component = this;
+    console.log("LOADING PLANTCONTAINERS FROM DB");
 
     jQuery.getJSON(`http://localhost:5000/plants_containers`, function(data) {
       console.log("loaded containerlist: " + data);
@@ -26,13 +28,26 @@ class PlantsContainerList extends React.Component {
     })
   }
 
+  loadPlants() {
+    let component = this;
+    console.log("LOADING PLANTLIST FROM DB");
+
+    jQuery.getJSON(`http://localhost:5000/plants`, function(data) {
+      console.log("PLANTLIST LOADED: " + data);
+      component.setState({
+        plants: data.plants
+      });
+    })
+  }
+
   componentDidMount() {
     console.log("ContainerList did Mount");
     this.reloadPlantsContainers();
+    this.loadPlants();
   }
 
   renderPlantSpots(plantsContainerId, plantsContainerName){
-    return<PlantSpots className="placeHolder" plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName}/>;
+    return<PlantSpots className="placeHolder" plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName} plants={this.state.plants}/>;
   }
 
   setContainerId(event) {
@@ -48,7 +63,7 @@ class PlantsContainerList extends React.Component {
   render(){
     return(
       <div>
-        <p>plantcontainers:</p>
+        <p>Plantcontainers:</p>
           <ul>
             {
               this.state.plantsContainers.map(function(plantsContainer, i){
@@ -60,7 +75,7 @@ class PlantsContainerList extends React.Component {
               }, this)
             }
           </ul>
-          
+
           <div>
             {
               this.state.plantsContainerId !== ""
