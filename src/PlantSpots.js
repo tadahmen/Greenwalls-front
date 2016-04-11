@@ -96,7 +96,7 @@ class PlantSpots extends React.Component {
       <div>
         <PlantMenu plantSpotPosition={this.state.plantSpotPosition} plantSpotId={this.state.plantSpotId} plantsContainerId={this.props.plantsContainerId}/>
         <p>Plantcontainer: {this.props.plantsContainerName}</p>
-        <div>
+        <div className="LinedPlantSpots">
             {
               this.state.plantSpots.map(function(plantSpot, i){
                 return(
