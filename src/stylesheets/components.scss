@@ -1,0 +1,12 @@
+// stylesteets/components.scss
+
+// First include Bootstrap
+@import "./bootstrap";
+
+// Below import your components' scss files
+// @import "components/base";
+// @import "components/todo-item";
+
+@import "components/plants-container-list";
+@import "components/plant-spots";
+@import "components/plant-menu";

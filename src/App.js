@@ -1,4 +1,5 @@
 import React from 'react';
+import './stylesheets/components.scss';
 import PlantsContainerList from './PlantsContainerList';  //only for testing that component
 
 class App extends React.Component {

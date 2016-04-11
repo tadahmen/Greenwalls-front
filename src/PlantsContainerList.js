@@ -62,7 +62,7 @@ class PlantsContainerList extends React.Component {
 
   render(){
     return(
-      <div>
+      <div className="plants-container-list">
         <p>Plantcontainers:</p>
           <ul>
             {
