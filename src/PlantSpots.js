@@ -57,7 +57,7 @@ class PlantSpots extends React.Component {
     console.log("SEARCHING PLANT with id: " + plantId);
     let plantList = this.props.plants;
     console.log("aantal planten in lijst:" + plantList.length)
-  
+
     for (var i = 0; i < plantList.length; i++) {
       if (plantList[i].id === plantId) {
         // console.log("found plant with picture: " + plant.picture);
@@ -85,6 +85,22 @@ class PlantSpots extends React.Component {
       plantSpotId: event.plantSpotId
     });
     console.log("plantspot after setState: " + this.state.plantSpotPosition)
+  }
+
+  deletePlantSpot(event){
+    console.log("DELETING PLANTSPOT");
+    let component = this;
+
+    jQuery.ajax({
+      type: 'DELETE',
+      url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
+      contentType: "application/json",
+      dataType: "json"
+    })
+    .done( function(){
+      console.log("spot deleted");
+      component.props.onChange()
+    })
   }
 
   componentDidMount() {
@@ -120,12 +136,14 @@ class PlantSpots extends React.Component {
                       //   ? this.showPlantSpot.bind(this, plantSpot.plant_id)
                       //   : console.log("plant id at check is undefined")
                     }
+                    <button calssName="delete-image" onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
+                    </button>
                   </button>
                 );
               }, this)
             }
-            <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
-            add plant
+            <button className="addSpot-button plantSpot" onClick={this.createPlantSpot.bind(this)}>
+            <p className = "addSpot-symbol">+</p>
             </button>
           </div>
       </div>

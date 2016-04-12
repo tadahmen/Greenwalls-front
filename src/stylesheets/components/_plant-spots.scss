@@ -12,6 +12,14 @@
   }
 }
 
+.addSpot-button{
+  background-color: transparentize(white, 0.8);
+}
+
+.addSpot-symbol{
+  font-size: 300%
+}
+
 .linedPlantSpots {
   @extend.row;
 }
