@@ -50,14 +50,13 @@ class PlantMenu extends React.Component {
   }
 
   putPictureInSpot(plantSpotPosition, plantPicture) {
-    document.getElementsByClassName('plantSpot')[plantSpotPosition].setAttribute("src", plantPicture);
+    document.getElementsByClassName('plantImage')[plantSpotPosition].setAttribute("src", plantPicture);
   }
 
   putPlantInSpot(event) {
     // event.preventDefault();
     console.log("put picture:" + event.plantPicture + " in spot with position: " + event.plantSpotPosition + ", and with id: " + event.plantSpotId);
     this.putPictureInSpot(event.plantSpotPosition, event.plantPicture);
-    // document.getElementsByClassName('plantSpot')[event.plantSpotPosition].setAttribute("src", event.plantPicture);
     this.savePlantInSpot(event.plantSpotId, event.plantId, event.plantsContainerId)
   }
 

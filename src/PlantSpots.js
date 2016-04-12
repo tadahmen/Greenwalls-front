@@ -23,29 +23,41 @@ class PlantSpots extends React.Component {
     jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
       console.log("loaded plantspots: " + data);
       component.setState({
-        plantSpots: data.plant_spots,
-        count: data.meta.count,
+        plantSpots: data.plant_spots
       });
     })
   }
 
-  // loadPlants() {
-  //   let component = this;
-  //   console.log("LOADING PLANTS FROM DB");
-  //
-  //   jQuery.getJSON(`http://localhost:5000/plants`, function(data) {
-  //     console.log("loaded Plantlist in plant spots: " + data);
-  //     component.setState({
-  //       plants: data.plants
-  //     });
-  //   })
-  // }
+  createPlantSpot(event){
+    let component = this;
+    let plantsContainerId = this.props.plantsContainerId;
+
+    let newPlantSpot ={
+      id: null,
+      x_position: this.state.plantSpots.length,
+      plants_container_id: plantsContainerId
+    }
+    console.log("number of plantspots in plantscontainer: " + this.state.plantSpots.length);
+
+    jQuery.ajax({
+      type:'POST',
+      url: `http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`,
+      data: JSON.stringify({
+        plant_spot: newPlantSpot
+      }),
+      contentType: "application/json",
+      dataType: "json"
+    })
+    .done(function(data) {
+      component.props.onChange()
+    })
+  }
 
   findById(plantId) {
     console.log("SEARCHING PLANT with id: " + plantId);
     let plantList = this.props.plants;
     console.log("aantal planten in lijst:" + plantList.length)
-    // return {picture: "https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"} //to find bug
+  
     for (var i = 0; i < plantList.length; i++) {
       if (plantList[i].id === plantId) {
         // console.log("found plant with picture: " + plant.picture);
@@ -61,7 +73,7 @@ class PlantSpots extends React.Component {
 
     console.log("using picture: " + plant.picture);
     let plantPicture = plant.picture;
-    return <img className="plantSpot" src={plantPicture}/>
+    return <img className="plantImage" src={plantPicture}/>
   }
 
   selectSpot(event) {
@@ -100,8 +112,7 @@ class PlantSpots extends React.Component {
             {
               this.state.plantSpots.map(function(plantSpot, i){
                 return(
-                  <button onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
-                    <p> {plantSpot.plant_id} </p>
+                  <button className="plantSpot" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
                     {
                       console.log("calling function showPlantSpot"),
                       this.showPlantSpot(plantSpot.plant_id) //.bind(this)
@@ -113,6 +124,9 @@ class PlantSpots extends React.Component {
                 );
               }, this)
             }
+            <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
+            add plant
+            </button>
           </div>
       </div>
     );
