@@ -48,7 +48,7 @@ class PlantsContainerList extends React.Component {
   }
 
   renderPlantSpots(plantsContainerId, plantsContainerName){
-    return<PlantSpots className="placeHolder" plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName} plants={this.state.plants}/>;
+    return<PlantSpots className="placeHolder" onChange={this.reloadPlantsContainers.bind(this)} plantsContainerId={plantsContainerId} plantsContainerName={plantsContainerName} plants={this.state.plants}/>;
   }
 
   setContainerId(event) {
