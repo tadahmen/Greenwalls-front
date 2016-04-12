@@ -49,14 +49,23 @@ class PlantMenu extends React.Component {
       });
   }
 
-  putPictureInSpot(plantSpotPosition, plantPicture) {
-    document.getElementsByClassName('plantImage')[plantSpotPosition].setAttribute("src", plantPicture);
+  putPictureInSpot(plantSpotId, plantSpotPosition, plantPicture) {
+    let plantSpotIdString = String(plantSpotId);
+    console.log("THE STRINGIFIED PLANTSPOT ID IS: " + plantSpotIdString);
+    let imageIdX = "plantImage".concat(plantSpotIdString);
+    // let imageIdX = "imageClass".concat(plantSpotId);
+    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX)
+
+    console.log("using picture: " + plantPicture);
+
+    document.getElementById(imageIdX).setAttribute("src", plantPicture);
+    // document.getElementsByClassName("plantImage")[plantSpotPosition].setAttribute("src", plantPicture);
   }
 
   putPlantInSpot(event) {
     // event.preventDefault();
     console.log("put picture:" + event.plantPicture + " in spot with position: " + event.plantSpotPosition + ", and with id: " + event.plantSpotId);
-    this.putPictureInSpot(event.plantSpotPosition, event.plantPicture);
+    this.putPictureInSpot(event.plantSpotId, event.plantSpotPosition, event.plantPicture);
     this.savePlantInSpot(event.plantSpotId, event.plantId, event.plantsContainerId)
   }
 

@@ -84,12 +84,19 @@ class PlantSpots extends React.Component {
       return {picture: "https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"}
     }
 
-  showPlantSpot(plantId) {
+  showPlantSpot(plantId, plantSpotId) {
     let plant = this.findById(plantId);
+    let plantPicture = plant.picture;
+
+    let plantSpotIdString = String(plantSpotId);
+    console.log("THE STRINGIFIED PLANTSPOT ID IS: " + plantSpotIdString);
+    let imageIdX = "plantImage".concat(plantSpotIdString);
+    // let imageIdX = "imageClass".concat(plantSpotId);
+    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX)
 
     console.log("using picture: " + plant.picture);
-    let plantPicture = plant.picture;
-    return <img className="plantImage" src={plantPicture}/>
+
+    return <img id={imageIdX} className = "plantImage"  src={plantPicture}/> //className="plantImage"
   }
 
   selectSpot(event) {
@@ -133,7 +140,7 @@ class PlantSpots extends React.Component {
                   <button className="plantPictureButton" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
                     {
                       console.log("calling function showPlantSpot"),
-                      this.showPlantSpot(plantSpot.plant_id) //.bind(this)
+                      this.showPlantSpot(plantSpot.plant_id, plantSpot.id) //, plantSpot.id) //.bind(this)
                       // plantSpot.plant_id !== undefined
                       //   ? this.showPlantSpot.bind(this, plantSpot.plant_id)
                       //   : console.log("plant id at check is undefined")
