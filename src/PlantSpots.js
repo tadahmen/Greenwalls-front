@@ -53,11 +53,27 @@ class PlantSpots extends React.Component {
     })
   }
 
+  deletePlantSpot(event){
+    console.log("DELETING PLANTSPOT");
+    let component = this;
+
+    jQuery.ajax({
+      type: 'DELETE',
+      url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
+      contentType: "application/json",
+      dataType: "json"
+    })
+    .done( function(){
+      console.log("spot deleted");
+      component.props.onChange()
+    })
+  }
+
   findById(plantId) {
     console.log("SEARCHING PLANT with id: " + plantId);
     let plantList = this.props.plants;
     console.log("aantal planten in lijst:" + plantList.length)
-  
+
     for (var i = 0; i < plantList.length; i++) {
       if (plantList[i].id === plantId) {
         // console.log("found plant with picture: " + plant.picture);
@@ -108,11 +124,13 @@ class PlantSpots extends React.Component {
       <div>
         <PlantMenu plantSpotPosition={this.state.plantSpotPosition} plantSpotId={this.state.plantSpotId} plantsContainerId={this.props.plantsContainerId}/>
         <p>Plantcontainer: {this.props.plantsContainerName}</p>
-        <div className="LinedPlantSpots">
-            {
-              this.state.plantSpots.map(function(plantSpot, i){
-                return(
-                  <button className="plantSpot" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
+        <div className="linedPlantSpots">
+          {
+            this.state.plantSpots.map(function(plantSpot, i){
+
+              return(
+                <div className="plantSpot">
+                  <button className="plantPictureButton" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
                     {
                       console.log("calling function showPlantSpot"),
                       this.showPlantSpot(plantSpot.plant_id) //.bind(this)
@@ -120,14 +138,21 @@ class PlantSpots extends React.Component {
                       //   ? this.showPlantSpot.bind(this, plantSpot.plant_id)
                       //   : console.log("plant id at check is undefined")
                     }
+
                   </button>
-                );
-              }, this)
-            }
-            <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
-            add plant
-            </button>
-          </div>
+                  <button calssName="delete-image" onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
+                    x
+                  </button>
+                </div>
+              );
+
+            }, this)
+          }
+
+          <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
+            +
+          </button>
+        </div>
       </div>
     );
   }

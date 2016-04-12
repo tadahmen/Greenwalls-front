@@ -1,17 +1,21 @@
-.plantSpot {
-  @extend.col-md-3;
-  width:200px;
-  height:200px;
-  overflow: hidden;
-
-
-  .plantImage {
-    width: 200px;
-    height: 200px;
-    // object-fit: cover;
-  }
-}
-
 .linedPlantSpots {
   @extend.row;
+}
+
+.plantSpot {
+  @extend.col-md-3;
+  width:auto;
+  height:auto;
+  display:inline-block;
+}
+
+.plantPictureButton{
+  width:200;
+  height:200;
+  overflow: hidden;
+}
+
+.plantImage {
+  width: 200px;
+  height: 200px;
 }
