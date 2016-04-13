@@ -1,6 +1,53 @@
-.plants-container-list {
+.plantscontainer-list {
   @extends.row;
-  @extends.row-centered;
-  margin-left: auto;
-  margin-right: auto;
+  // @extends.row-centered;
+  // margin-left: auto;
+  // margin-right: auto;
+}
+
+.wrapper {
+  margin-right: 70px;
+
+}
+
+.plantsContainer {
+  @extends.col-md-2;
+  display: inline-block;
+  width: 150px;
+  height: 50px;
+  background-color: darksalmon;
+}
+
+.containerName {
+  font-weight: bold;
+}
+
+.deleteContainer {
+  height:50px;
+  width: 50px;
+  position:absolute;
+  // margin-right: 10px;
+  background-color: transparentize(grey, 0.8);
+}
+
+.deleteSymbol {
+  font-size: 20px;
+  line-height: 30px; //to vertically center symbol in container
+  color: transparentize(black, 0.5)
+}
+
+
+.add-container {
+  display: inline;
+  margin-left: 10px;
+  width: 50px;
+  height:50px;
+  position: absolute; //to hold position when with bigger text-size
+  background-color: darksalmon; //transparentize(darksalmon, 0.5);
+}
+
+.addContainer-symbol {
+  font-size: 25px;
+  line-height: 30px;
+  font-weight: bold;
 }

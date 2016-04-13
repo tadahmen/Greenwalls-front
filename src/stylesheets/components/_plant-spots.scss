@@ -3,19 +3,39 @@
 }
 
 .plantSpot {
-  @extend.col-md-3;
-  width:auto;
-  height:auto;
-  display:inline-block;
-}
-
-.plantPictureButton{
-  width:200;
-  height:200;
-  overflow: hidden;
+  // @extend.col-md-3;
+  width: 210px;
+  height: 210px;
+  display: inline;
+  position: relative;   //to get delete-button on image
+  background-color: transparentize(grey, 0.8);
 }
 
 .plantImage {
   width: 200px;
   height: 200px;
+  border-radius: 50px;
+  // object-fit: cover;
+}
+
+.add-symbol {
+  font-size: 200%;
+  font-weight: lighter;
+}
+
+.deleteButton {
+  position: absolute; //to position it on the image
+  height: 20px;
+  width: 20px;
+  top: 10px;
+  right: 10px;
+  border: 2px solid orange;
+  border-radius: 100%;
+  background-color:white;
+}
+
+.delete-symbol{
+  font-size: 18px;
+  line-height: 70%; //to align it vertically in it's div
+
 }
