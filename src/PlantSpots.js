@@ -26,6 +26,18 @@ class PlantSpots extends React.Component {
         plantSpots: data.plant_spots
       });
     })
+    .done(function() {
+      console.log(component.state.newSpotCreated);
+      if (component.state.newSpotCreated) {
+        let spotsTotal = component.state.plantSpots.length;
+        let newSpot = component.state.plantSpots[spotsTotal-1];//the total-1 gives the position of the new spot
+        console.log(">>>>>CHECK VALUE: " + spotsTotal);
+        component.setState({
+          plantSpotId: newSpot.id, //to directly show 'add plantspot' button for new container
+          newSpotCreated: false  //sets this value back to false
+        });
+      }
+    });
   }
 
   createPlantSpot(event){
@@ -37,6 +49,9 @@ class PlantSpots extends React.Component {
       x_position: this.state.plantSpots.length,
       plants_container_id: plantsContainerId
     }
+    component.setState({
+      newSpotCreated: true
+    });
     console.log("number of plantspots in plantscontainer: " + this.state.plantSpots.length);
 
     jQuery.ajax({
@@ -49,10 +64,7 @@ class PlantSpots extends React.Component {
       dataType: "json"
     })
     .done(function(data) {
-      component.props.onChange()
-      component.setState({
-        plantSpotId: ""   //after clicking on add spot, you'll have to click again to select a spot
-      })
+      component.props.onChange() //
     })
   }
 
@@ -75,7 +87,6 @@ class PlantSpots extends React.Component {
   findById(plantId) {
     console.log("SEARCHING PLANT with id: " + plantId);
     let plantList = this.props.plants;
-    console.log("aantal planten in lijst:" + plantList.length)
 
     for (var i = 0; i < plantList.length; i++) {
       if (plantList[i].id === plantId) {

@@ -12,22 +12,35 @@ class PlantsContainerList extends React.Component {
       plantsContainerId: "",
       plantsContainerName: "",
       count: 0,
-      plants: []
+      plants: [],
+      timesLoaded: 0
     }
   }
 
   reloadPlantsContainers(event) {
     let component = this;
     console.log("LOADING PLANTCONTAINERS FROM DB");
-    console.log("containerid after reload: " + component.plantsContainerId)
+    console.log("containerid after reload: " + component.state.plantsContainerId)
 
     jQuery.getJSON(`http://localhost:5000/plants_containers`, function(data) {
       console.log("loaded containerlist: " + data);
       component.setState({
         plantsContainers: data.plants_containers,
         count: data.meta.count
-      });
+      })
     })
+    .done(function() {
+      console.log(component.state.newContainerCreated);
+      if (component.state.newContainerCreated) { //true if a new container just has been created
+        let containersTotal = component.state.plantsContainers.length;
+        let lastContainer = component.state.plantsContainers[containersTotal-1];//the total-1 gives the position of the current last container
+        console.log(">>>>>CHECK VALUE: " + containersTotal);
+        component.setState({
+          plantsContainerId: lastContainer.id, //to directly show 'add plantspot' button for new container
+          newContainerCreated: false  //sets this value back to false
+        });
+      }
+    });
   }
 
   loadPlants() {
@@ -47,7 +60,7 @@ class PlantsContainerList extends React.Component {
     let newPlantsContainer ={
       id: null,
       name: "new plants-container"
-    }
+    };
 
     jQuery.ajax({
       type:'POST',
@@ -58,16 +71,13 @@ class PlantsContainerList extends React.Component {
       contentType: "application/json",
       dataType: "json"
     })
-    .done(function(data) {
+    .done(function() {
       console.log("new plants container succesfully created");
-      component.reloadPlantsContainers(); //to directly show new container in list on screen
-
-      let containersTotal = component.state.plantsContainers.length;
-      let lastContainer = component.state.plantsContainers[containersTotal-1];
-
       component.setState({
-        plantsContainerId: lastContainer.id //to directly show 'add plantspot' button for new container
-      })
+        newContainerCreated: true   //a switch to make reloadPlantsContainers select the new container to appear on screen
+      });
+      component.reloadPlantsContainers(function() {
+      }); //to directly show new container in list on screen
     })
   }
 
@@ -83,7 +93,7 @@ class PlantsContainerList extends React.Component {
     })
     .done( function(){
       console.log("container succesfully deleted");
-      console.log("CHECK" + event);
+      console.log("CHECK id of deleted container: " + event);
       component.reloadPlantsContainers();   //plantcontainerlist on screen refreshes
       if (component.state.plantsContainerId === event) {
         component.setState(
@@ -94,7 +104,7 @@ class PlantsContainerList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("ContainerList did Mount");
+    console.log("MOUNTING CONTAINERLIST");
     this.reloadPlantsContainers();
     this.loadPlants();
   }
@@ -104,13 +114,14 @@ class PlantsContainerList extends React.Component {
   }
 
   setContainerId(event) {
+    console.log("SELECTING CONTAINER");
     console.log("new plantsContainerId:" + event.id);
-    // let newState =
+    //let newState =
     this.setState({
       plantsContainerId: event.id,
       plantsContainerName: event.name
-    });
-    console.log("plantsContainerId after setState is:" + this.state.plantsContainerId)
+    })
+      console.log("this.state.plantsContainerId after setState is:" + component.state.plantsContainerId)
   }
 
   render(){
