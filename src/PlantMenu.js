@@ -51,15 +51,13 @@ class PlantMenu extends React.Component {
 
   putPictureInSpot(plantSpotId, plantSpotPosition, plantPicture) {
     let plantSpotIdString = String(plantSpotId);
-    console.log("THE STRINGIFIED PLANTSPOT ID IS: " + plantSpotIdString);
     let imageIdX = "plantImage".concat(plantSpotIdString);
-    // let imageIdX = "imageClass".concat(plantSpotId);
-    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX)
 
+    // let imageIdX = "imageClass".concat(plantSpotId);
+    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX);
     console.log("using picture: " + plantPicture);
 
     document.getElementById(imageIdX).setAttribute("src", plantPicture);
-    // document.getElementsByClassName("plantImage")[plantSpotPosition].setAttribute("src", plantPicture);
   }
 
   putPlantInSpot(event) {

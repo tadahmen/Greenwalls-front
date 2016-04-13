@@ -50,6 +50,9 @@ class PlantSpots extends React.Component {
     })
     .done(function(data) {
       component.props.onChange()
+      component.setState({
+        plantSpotId: ""   //after clicking on add spot, you'll have to click again to select a spot
+      })
     })
   }
 
@@ -65,7 +68,7 @@ class PlantSpots extends React.Component {
     })
     .done( function(){
       console.log("spot deleted");
-      component.props.onChange()
+      component.props.onChange();
     })
   }
 
@@ -87,16 +90,16 @@ class PlantSpots extends React.Component {
   showPlantSpot(plantId, plantSpotId) {
     let plant = this.findById(plantId);
     let plantPicture = plant.picture;
-
     let plantSpotIdString = String(plantSpotId);
-    console.log("THE STRINGIFIED PLANTSPOT ID IS: " + plantSpotIdString);
     let imageIdX = "plantImage".concat(plantSpotIdString);
-    // let imageIdX = "imageClass".concat(plantSpotId);
-    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX)
 
+    // let imageIdX = "imageClass".concat(plantSpotId);
+    console.log("THE CLASSNAME OF THE IMAGE IS: " + imageIdX);
     console.log("using picture: " + plant.picture);
 
-    return <img id={imageIdX} className = "plantImage"  src={plantPicture}/> //className="plantImage"
+    return (
+        <img id={imageIdX} className = "plantImage"  src={plantPicture}/>
+    )
   }
 
   selectSpot(event) {
@@ -136,28 +139,22 @@ class PlantSpots extends React.Component {
             this.state.plantSpots.map(function(plantSpot, i){
 
               return(
-                <div className="plantSpot">
-                  <button className="plantPictureButton" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
-                    {
-                      console.log("calling function showPlantSpot"),
-                      this.showPlantSpot(plantSpot.plant_id, plantSpot.id) //, plantSpot.id) //.bind(this)
-                      // plantSpot.plant_id !== undefined
-                      //   ? this.showPlantSpot.bind(this, plantSpot.plant_id)
-                      //   : console.log("plant id at check is undefined")
-                    }
+                <button className="plantSpot" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
+                  <div className="deleteButton" onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
+                    {/*<p className="delete-symbol"> x </p>*/}
+                    <span className="delete-symbol"> x </span>
+                  </div>
+                  {
+                    this.showPlantSpot(plantSpot.plant_id, plantSpot.id)
+                  }
+                </button>
 
-                  </button>
-                  <button calssName="delete-image" onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
-                    x
-                  </button>
-                </div>
               );
 
             }, this)
           }
-
           <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
-            +
+            <p className="add-symbol"> + </p>
           </button>
         </div>
       </div>
