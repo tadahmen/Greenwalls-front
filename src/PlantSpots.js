@@ -18,43 +18,55 @@ class PlantSpots extends React.Component {
     let component = this;
     console.log("LOADING PLANT SPOTS FROM DB");
     console.log("containerId for loading PlantSpots:" + plantsContainerId);
-    console.log("id in props is: " + this.props.plantsContainerId); //shows that props still holds previous value
+    // console.log("(containerid in props is still old id: " + this.props.plantsContainerId + ")"); //(just to see if value in props 'received' new value from parent)
 
-    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) {
-      console.log("loaded plantspots: " + data);
+    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
       component.setState({
-        plantSpots: data.plant_spots
+        plantSpots: data.plant_spots,
       });
     })
+
     .done(function() {
-      console.log(component.state.newSpotCreated);
-      if (component.state.newSpotCreated) {
-        let spotsTotal = component.state.plantSpots.length;
-        let newSpot = component.state.plantSpots[spotsTotal-1];//the total-1 gives the position of the new spot
-        console.log(">>>>>CHECK VALUE: " + spotsTotal);
-        component.setState({
-          plantSpotId: newSpot.id, //to directly show 'add plantspot' button for new container
-          newSpotCreated: false  //sets this value back to false
-        });
-      }
+        console.log("LOADED PLANTSPOTS: " + component.state.plantSpots);
+        console.log(">>>>>>>>>CHECK total nr of spots: " + component.state.plantSpots.length);
+
+
+        if (component.state.plantSpots.length === 0) { //if the container is empty, create its first plant spot
+          component.createPlantSpot(plantsContainerId)
+        }; //>>>>>>small ISSUE: when deleting all spots in a container, 2 spots are autocreated
+
+        // if (component.state.autoCreateSpot) { //new containers are automatically filled with 1 spot
+        //   component.createPlantSpot(plantsContainerId);
+        // }
+
+        console.log(">>>>CHECK newspotcreated: " + component.state.newSpotCreated);
+        if (component.state.newSpotCreated) {   //automatically select a newly created plantspot
+          let spotsTotal = component.state.plantSpots.length;
+          let newSpot = component.state.plantSpots[spotsTotal-1];//the total-1 gives the position of the new spot
+
+          component.setState({
+            plantSpotId: newSpot.id, //selects the spot
+            newSpotCreated: false  //sets this switch back to false
+          });
+        }
     });
   }
 
-  createPlantSpot(event){
+  createPlantSpot(){
+    console.log("CREATING NEW PLANTSPOT")
     let component = this;
     let plantsContainerId = this.props.plantsContainerId;
-
-    let newPlantSpot ={
+    let newPlantSpot ={   //the new plantspot
       id: null,
       x_position: this.state.plantSpots.length,
       plants_container_id: plantsContainerId
     }
-    component.setState({
-      newSpotCreated: true
-    });
-    console.log("number of plantspots in plantscontainer: " + this.state.plantSpots.length);
 
-    jQuery.ajax({
+    this.setState({    //sets a switch to automatically select new spot after reloading
+      newSpotCreated: true,   //switch to automatically select the new spot in reloadPlantSpots
+    });
+
+    jQuery.ajax({         //posts new plantspot
       type:'POST',
       url: `http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`,
       data: JSON.stringify({
@@ -64,15 +76,16 @@ class PlantSpots extends React.Component {
       dataType: "json"
     })
     .done(function(data) {
-      component.props.onChange() //
+      // reloadPlantSpots(plantsContainerId);
+      component.props.onChange() //reloads plantcontainer to directly show new spot on screen
     })
   }
 
-  deletePlantSpot(event){
+  deletePlantSpot(event){ //to delete plant spot from db
     console.log("DELETING PLANTSPOT");
     let component = this;
 
-    jQuery.ajax({
+    jQuery.ajax({ //request to db
       type: 'DELETE',
       url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
       contentType: "application/json",
@@ -80,21 +93,19 @@ class PlantSpots extends React.Component {
     })
     .done( function(){
       console.log("spot deleted");
-      component.props.onChange();
+      component.props.onChange(); //reloads plantscontainers to refresh the screen
     })
   }
 
-  findById(plantId) {
+  findById(plantId) {   //to find the picture for the plant
     console.log("SEARCHING PLANT with id: " + plantId);
     let plantList = this.props.plants;
 
-    for (var i = 0; i < plantList.length; i++) {
+    for (var i = 0; i < plantList.length; i++) {  //to find the plant in the plants array
       if (plantList[i].id === plantId) {
-        // console.log("found plant with picture: " + plant.picture);
         return plantList[i]
       }
-    }
-        // console.log("no plant found; returning default picture");
+    } //if no plant was found, return default picture:
       return {picture: "https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"}
     }
 
@@ -113,7 +124,7 @@ class PlantSpots extends React.Component {
     )
   }
 
-  selectSpot(event) {
+  selectSpot(event) {   //selects the spot for putting (new) plant in it
     console.log("SETTING PLANT SPOT TO SELECTED SPOT");
     console.log("id in selectSpot:" + event.plantSpotId);
     console.log("position of selected spot (0 for first): " + event.plantSpotPosition);
@@ -135,7 +146,7 @@ class PlantSpots extends React.Component {
     console.log("reload PlantSpots");
     this.setState({
       plantSpotPosition: "",
-      plantsContainerId: nextProps.plantsContainerId
+      plantsContainerId: nextProps.plantsContainerId,
     });
     this.reloadPlantSpots(nextProps.plantsContainerId);
   }
@@ -143,8 +154,13 @@ class PlantSpots extends React.Component {
   render(){
     return(
       <div>
-        <PlantMenu plantSpotPosition={this.state.plantSpotPosition} plantSpotId={this.state.plantSpotId} plantsContainerId={this.props.plantsContainerId}/>
         <p>Plantcontainer: {this.props.plantsContainerName}</p>
+        <button className="addPlantSpot" onClick={this.createPlantSpot.bind(this)}>
+          <p className="add-symbol"> + </p>
+        </button>
+        <div className="plantMenu">
+          <PlantMenu  plantSpotPosition={this.state.plantSpotPosition} plantSpotId={this.state.plantSpotId} plantsContainerId={this.props.plantsContainerId}/>
+        </div>
         <div className="linedPlantSpots">
           {
             this.state.plantSpots.map(function(plantSpot, i){
@@ -164,9 +180,6 @@ class PlantSpots extends React.Component {
 
             }, this)
           }
-          <button className="plantSpot" onClick={this.createPlantSpot.bind(this)}>
-            <p className="add-symbol"> + </p>
-          </button>
         </div>
       </div>
     );
