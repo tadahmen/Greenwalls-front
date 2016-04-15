@@ -1,5 +1,6 @@
 import React from 'react';
 import jQuery from 'jquery';
+import App from './App';
 
 class PlantMenu extends React.Component {
   constructor() {
@@ -76,15 +77,20 @@ class PlantMenu extends React.Component {
     return(
       <div>
         <p>plants:</p>
-        <ul>
+        <div className="plant-menu">
+          <button className="addPlantSpot"
+            onClick={this.props.onClick}>
+            <p className="add-symbol"> + </p>
+          </button>
             {
               this.state.plants.map(function(plant, i){
-                return(<li>
-                  <button onClick={this.putPlantInSpot.bind(this, {plantPicture: plant.picture, plantSpotPosition: this.props.plantSpotPosition, plantSpotId: this.props.plantSpotId, plantId: plant.id, plantsContainerId: this.props.plantsContainerId} )}>
+                return(
+                  <button className = "menu-item" onClick = {this.putPlantInSpot.bind(this, {plantPicture: plant.picture, plantSpotPosition: this.props.plantSpotPosition, plantSpotId: this.props.plantSpotId, plantId: plant.id, plantsContainerId: this.props.plantsContainerId} )}>
                     {plant.name}
-                  </button></li>);
+                  </button>
+                );
             }, this)}
-        </ul>
+        </div>
       </div>
     );
   }

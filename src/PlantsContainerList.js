@@ -139,27 +139,31 @@ class PlantsContainerList extends React.Component {
 
   render(){
     return(
-      <div className="plantscontainer-list">
-        <p>Plantcontainers:</p>
-        {
-          this.state.plantsContainers.map(function(plantsContainer, i){ //shows all plantscontainernames, each with delete button
+      <div className="plantscontainer-component">
+        <div className= "plantscontainer-menu">
+          <p>Plantcontainers:</p>
+          {
+            this.state.plantsContainers.map(function(plantsContainer, i){ //shows all plantscontainernames, each with delete button
 
-            return(
-              <span className="wrapper">
-                <button className="plantsContainer" onClick={this.setContainerId.bind(this, plantsContainer)}> {/*clicked container is selected*/}
-                  <span className="containerName"> {plantsContainer.name} </span>
-                </button>
-                <button className="deleteContainer" onClick={this.deletePlantsContainer.bind(this, plantsContainer.id)}>
-                  <span className="deleteSymbol"> x </span> {/*container is deleted on clicking 'x'*/}
-                </button>
-              </span>
-            );
-          }, this)
+              return(
+                <div className="wrapper">
+                  <button className="plantsContainer" onClick={this.setContainerId.bind(this, plantsContainer)}> {/*clicked container is selected*/}
+                    <span className="containerName"> {plantsContainer.name} </span>
+                  </button>
+                  <button className="deleteContainer" onClick={this.deletePlantsContainer.bind(this, plantsContainer.id)}>
+                    <span className="deleteSymbol"> x </span> {/*container is deleted on clicking 'x'*/}
+                  </button>
+                </div>
+              );
+            }, this)
+          }
 
-        }
-        <button className="add-container" onClick={this.createPlantsContainer.bind(this)}> {/*creates new container on click*/}
-          <span className="addContainer-symbol"> + </span>
-        </button>
+          <button className="add-container" onClick={this.createPlantsContainer.bind(this)}> {/*creates new container on click*/}
+            <span className="addContainer-symbol"> + </span>
+          </button>
+
+        </div>  {/*end of div plantscontainer-menu*/}
+
         <div>
           {
             this.state.plantsContainerId !== "" //to see that on starting the app, no unnecessary rendering is done

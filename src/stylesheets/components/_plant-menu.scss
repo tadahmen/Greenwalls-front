@@ -1,0 +1,28 @@
+.plant-menu {
+  @extend .btn-group-vertical;
+}
+
+.menu-item {
+  @extend .btn;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+}
+
+.addPlantSpot {
+  @extend .btn;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  // background-color:green;
+}
+
+.add-symbol {
+  font-size: 200%;
+  line-height: 0px;
+  font-weight: bold;
+  position: relative;
+  top: 5px;
+}

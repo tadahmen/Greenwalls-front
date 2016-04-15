@@ -1,37 +1,42 @@
 .linedPlantSpots {
-  @extend.row;
+  @extend.col-md-10;
+  padding-left: 0px; //to undo the extra padding due to bootstrap col class
 }
 
 .plantSpot {
   // @extend.col-md-3;
-  width: 210px;
-  height: 210px;
+  margin-left: 20px;
+  width: 160px;
+  height: 160px;
   display: inline;
   position: relative;   //to get delete-button on image
-  background-color: transparentize(grey, 0.8);
+  border-radius: 5px;
+  background-color: transparentize(lightgreen, 0.2);
 }
 
 .plantImage {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50px;
   // object-fit: cover;
 }
 
-.addPlantSpot {
-  width: 50px;
-  height:50px;
-  border-radius: 10px;
-  background-color:green;
-}
-
-.add-symbol {
-  font-size: 200%;
-  line-height: 0px;
-  font-weight: bold;
-  position: relative;
-  top: 5px;
-}
+// .addPlantSpot {
+//   width: 50px;
+//   height:50px;
+//   border-radius: 10px;
+//   background-color:green;
+//   position:absolute;
+//   right: 20px;
+// }
+//
+// .add-symbol {
+//   font-size: 200%;
+//   line-height: 0px;
+//   font-weight: bold;
+//   position: relative;
+//   top: 5px;
+// }
 
 .plantMenu {
   position:absolute;

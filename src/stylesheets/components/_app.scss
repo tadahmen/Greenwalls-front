@@ -1,3 +1,20 @@
 .containerMaster {
-  background-color: lightgreen;
+  height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.footer {
+  display:block;
+  background-color: #d9e6f2;
+  padding: 10px;
+  padding-top: 20px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  line-height: 0px;
 }
