@@ -1,5 +1,8 @@
 .plant-menu {
   @extend .btn-group-vertical;
+  position: fixed;
+  top:230px;
+  right:20px;
 }
 
 .menu-item {
@@ -11,18 +14,13 @@
 }
 
 .addPlantSpot {
-  @extend .btn;
-  border: 2px solid grey;
-  border-radius: 10px;
-  background-color: white;
-  color: black;
-  // background-color:green;
+  background-color:lightgreen;
 }
 
 .add-symbol {
-  font-size: 200%;
+  font-size: 150%;
   line-height: 0px;
-  font-weight: bold;
+  // font-weight: bold;
   position: relative;
   top: 5px;
 }
