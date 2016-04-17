@@ -1,9 +1,8 @@
 .containerMaster {
-  height: 100%;
 }
 
 .navbar {
-  overflow-y: hidden;
+  z-index: 1; //so the page content scrolls underneath it
   position: fixed;
   right: 0px;
   left: 0px;
@@ -14,11 +13,11 @@
 .footer {
   position: fixed;
   display:block;
-  background-color: #d9e6f2;
+  background-color: #dddddd;
   padding: 10px;
   padding-top: 20px;
   bottom: 0px;
   right: 0px;
   left: 0px;
-  line-height: 0px;
+  line-height: 0px; //to vertically align the text
 }

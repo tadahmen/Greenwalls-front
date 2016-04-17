@@ -155,7 +155,6 @@ class PlantSpots extends React.Component {
   render(){
     return(
       <div className="plantSpots-component">
-
         <p>Plantcontainer: {this.props.plantsContainerName}</p>
 
         {/*<button className="addPlantSpot"
@@ -176,8 +175,10 @@ class PlantSpots extends React.Component {
             this.state.plantSpots.map(function(plantSpot, i){
               return(
 
-                <button className="plantSpot" onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
-                  <div className="deleteButton" onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
+                <button className="plantSpot"
+                  onClick={this.selectSpot.bind(this, {plantSpotPosition: plantSpot.x_position, plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId})}>
+                  <div className="deleteButton"
+                    onClick={this.deletePlantSpot.bind(this, {plantSpotId: plantSpot.id, plantsContainerId: this.props.plantsContainerId}) } >
                     <span className="delete-symbol"> x </span>
                   </div>
                   { this.showPlantSpot(plantSpot.plant_id, plantSpot.id) }

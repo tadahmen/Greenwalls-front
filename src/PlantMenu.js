@@ -75,32 +75,30 @@ class PlantMenu extends React.Component {
 
   render(){
     return(
-      <div>
-        <p>plants:</p>
-
         <div className="plant-menu">
           <button className="menu-item addPlantSpot"
             onClick={this.props.onClick}>
             <p className="add-symbol"> + </p>
-
           </button>
-            {
-              this.state.plants.map(function(plant, i){
-                return(
-                  <button className = "menu-item"
-                    onClick = {this.putPlantInSpot.bind(this, {
-                        plantPicture: plant.picture,
-                        plantSpotPosition: this.props.plantSpotPosition,
-                        plantSpotId: this.props.plantSpotId,
-                        plantId: plant.id,
-                        plantsContainerId: this.props.plantsContainerId} )}>
-                    {plant.name}
-                  </button>
-                );
-            }, this)}
-        </div>
 
-      </div>
+          {
+            this.state.plants.map(function(plant, i){
+              return(
+                <button className = "menu-item"
+                  onClick = {this.putPlantInSpot.bind(this, {
+                      plantPicture: plant.picture,
+                      plantSpotPosition: this.props.plantSpotPosition,
+                      plantSpotId: this.props.plantSpotId,
+                      plantId: plant.id,
+                      plantsContainerId: this.props.plantsContainerId} )}>
+                  <p className = "menu-item-text" >
+                    {plant.name}
+                  </p>
+                  <img className = "menu-thumbnail" src = {plant.picture} />
+                </button>
+              );
+          }, this)}
+        </div>
     );
   }
 }

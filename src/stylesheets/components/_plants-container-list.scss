@@ -2,6 +2,7 @@
 }
 
 .plantscontainer-menu {
+  z-index: 1; //so the page content doesn'n scroll over it
   @extend .row;
   position: fixed;
   left: 0px;
@@ -54,8 +55,8 @@
   height:50px;
   border-radius: 10px;
   position: absolute; //to put it on right side. and also to hold position when with bigger text-size
-  right: 20px;
-  background-color: darksalmon; //transparentize(darksalmon, 0.5);
+  right: 40px;
+  background-color: ivory; //transparentize(darksalmon, 0.5);
 }
 
 .addContainer-symbol {
