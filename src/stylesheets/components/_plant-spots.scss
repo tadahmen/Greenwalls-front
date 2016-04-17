@@ -1,42 +1,38 @@
+.plantSpots-component {
+  position:relative;
+  top: 150px;
+  padding-top: 30px;
+  padding-left: 20px;
+  width: 80%;
+}
+
 .linedPlantSpots {
-  @extend.row;
+  @extend.col-md-12;
+  padding-top: 20px;
+  padding-left: 0px; //to undo the extra padding due to bootstrap col class
 }
 
 .plantSpot {
-  // @extend.col-md-3;
-  width: 210px;
-  height: 210px;
+  width: 160px;
+  height: 160px;
   display: inline;
   position: relative;   //to get delete-button on image
-  background-color: transparentize(grey, 0.8);
+  border-radius: 20px;
+  background-color: transparentize(lightgreen, 0.2);
+}
+
+.plantSpot:hover {
+  border: 3px solid #7e7e7e;
 }
 
 .plantImage {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50px;
   // object-fit: cover;
 }
 
-.addPlantSpot {
-  width: 50px;
-  height:50px;
-  border-radius: 10px;
-  background-color:green;
-}
-
-.add-symbol {
-  font-size: 200%;
-  line-height: 0px;
-  font-weight: bold;
-  position: relative;
-  top: 5px;
-}
-
-.plantMenu {
-  position:absolute;
-  right: 20px;
-}
+.plant-menu {} //already styled in stylesheet 'plant-menu'
 
 .deleteButton {
   position: absolute; //to position it on the image

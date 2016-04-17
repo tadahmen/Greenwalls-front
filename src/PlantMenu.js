@@ -1,5 +1,6 @@
 import React from 'react';
 import jQuery from 'jquery';
+import App from './App';
 
 class PlantMenu extends React.Component {
   constructor() {
@@ -74,18 +75,30 @@ class PlantMenu extends React.Component {
 
   render(){
     return(
-      <div>
-        <p>plants:</p>
-        <ul>
-            {
-              this.state.plants.map(function(plant, i){
-                return(<li>
-                  <button onClick={this.putPlantInSpot.bind(this, {plantPicture: plant.picture, plantSpotPosition: this.props.plantSpotPosition, plantSpotId: this.props.plantSpotId, plantId: plant.id, plantsContainerId: this.props.plantsContainerId} )}>
+        <div className="plant-menu">
+          <button className="menu-item addPlantSpot"
+            onClick={this.props.onClick}>
+            <p className="add-symbol"> + </p>
+          </button>
+
+          {
+            this.state.plants.map(function(plant, i){
+              return(
+                <button className = "menu-item"
+                  onClick = {this.putPlantInSpot.bind(this, {
+                      plantPicture: plant.picture,
+                      plantSpotPosition: this.props.plantSpotPosition,
+                      plantSpotId: this.props.plantSpotId,
+                      plantId: plant.id,
+                      plantsContainerId: this.props.plantsContainerId} )}>
+                  <p className = "menu-item-text" >
                     {plant.name}
-                  </button></li>);
-            }, this)}
-        </ul>
-      </div>
+                  </p>
+                  <img className = "menu-thumbnail" src = {plant.picture} />
+                </button>
+              );
+          }, this)}
+        </div>
     );
   }
 }

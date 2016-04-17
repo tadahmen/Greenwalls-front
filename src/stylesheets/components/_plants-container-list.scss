@@ -1,25 +1,31 @@
-.plantscontainer-list {
-  @extends.row;
-  // @extends.row-centered;
-  // margin-left: auto;
-  // margin-right: auto;
+.plantscontainer-component {
+}
+
+.plantscontainer-menu {
+  z-index: 1; //so the page content doesn'n scroll over it
+  @extend .row;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top:50px;
+  padding-left: 20px;
+  background-color: lightgreen;
 }
 
 .wrapper {
-  margin-right: 70px;
-  border-radius: 100px;
-  overflow: hidden;
-
+  @extend.col-md-2;
+  margin-right: 15px;
+  padding-bottom: 20px;
 }
 
 .plantsContainer {
-  @extends.col-md-2;
-  display: inline-block;
-  width: 150px;
+  font-size: 14px;
+  display: inline;
+  width: 130px;
   height: 50px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  background-color: darksalmon;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 5px;
+  background-color: white;
 }
 
 .containerName {
@@ -29,10 +35,9 @@
 .deleteContainer {
   height:50px;
   width: 50px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 20px;
   position:absolute;
-  // margin-right: 10px;
   background-color: transparentize(grey, 0.8);
 }
 
@@ -50,8 +55,8 @@
   height:50px;
   border-radius: 10px;
   position: absolute; //to put it on right side. and also to hold position when with bigger text-size
-  right: 100px;
-  background-color: darksalmon; //transparentize(darksalmon, 0.5);
+  right: 40px;
+  background-color: ivory; //transparentize(darksalmon, 0.5);
 }
 
 .addContainer-symbol {

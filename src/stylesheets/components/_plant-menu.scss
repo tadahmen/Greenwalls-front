@@ -1,0 +1,57 @@
+.plant-menu {
+  @extend .btn-group-vertical;
+  width: 150px;
+  position: fixed;
+  top:230px;
+  right:20px;
+  padding-top: 0px;
+  border-radius: 30px;
+}
+
+.menu-item {
+  @extend .btn;
+  height: 40px;
+  border: 2px solid #aaaaaa;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  z-index: -1;
+  // overflow: hidden;
+}
+
+.menu-item:hover {
+  border: 3px solid lightgreen;
+}
+
+.menu-item-text {
+  text-align: left;
+}
+
+.menu-thumbnail {
+  @extend .img-rounded;
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transition: width 2s, width 1s, height 1s, opacity 5s, top 1s, right 1s; //, height 1s, opacity 1s;
+}
+
+.menu-thumbnail:hover {
+  width: 100px;
+  height: 100px;
+  opacity: 0.6;
+  top: -35px;
+  right: 5px;
+}
+
+.addPlantSpot {
+  background-color:lightgreen;
+}
+
+.add-symbol {
+  font-size: 150%;
+  line-height: 0px; //to vertically center it in it's button
+  position: relative;
+  top: 5px;
+}
