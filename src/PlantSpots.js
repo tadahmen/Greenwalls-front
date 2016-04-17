@@ -2,7 +2,7 @@ import React from 'react';
 import jQuery from 'jquery';
 import App from './App';
 import PlantMenu from './PlantMenu';
-import PlantSpot from './PlantSpot';
+// import PlantSpot from './PlantSpot';
 
 class PlantSpots extends React.Component {
   constructor() {
