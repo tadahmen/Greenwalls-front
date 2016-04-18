@@ -2,7 +2,7 @@ import React from 'react';
 import jQuery from 'jquery';
 import App from './App';
 import PlantMenu from './PlantMenu';
-import PlantSpot from './PlantSpot';
+// import PlantSpot from './PlantSpot';
 
 class PlantSpots extends React.Component {
   constructor() {
@@ -21,7 +21,7 @@ class PlantSpots extends React.Component {
     console.log("containerId for loading PlantSpots:" + plantsContainerId);
     // console.log("(containerid in props is still old id: " + this.props.plantsContainerId + ")"); //(just to see if value in props 'received' new value from parent)
 
-    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
+    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
       component.setState({
         plantSpots: data.plant_spots,
       });
@@ -69,7 +69,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({         //posts new plantspot
       type:'POST',
-      url: `http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`,
+      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`,
       data: JSON.stringify({
         plant_spot: newPlantSpot
       }),
@@ -88,7 +88,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({ //request to db
       type: 'DELETE',
-      url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
+      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
       contentType: "application/json",
       dataType: "json"
     })
@@ -106,13 +106,21 @@ class PlantSpots extends React.Component {
       if (plantList[i].id === plantId) {
         return plantList[i]
       }
-    } //if no plant was found, return default picture:
-      return {picture: "https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg"}
+    }
+      return ("not found");
     }
 
   showPlantSpot(plantId, plantSpotId) {
     let plant = this.findById(plantId);
-    let plantPicture = plant.picture;
+    let plantPicture = "";
+    if (plant === "not found") {  //if no plant was found, return default picture
+      plantPicture = "https://www.onlinepakhuis.nl/data/Bloempotten/bloempot-julia-oranje-d55-h50.jpg";
+    }
+    else {
+      plantPicture = plant.picture;
+    }
+
+
     let plantSpotIdString = String(plantSpotId);
     let imageIdX = "plantImage".concat(plantSpotIdString);
 

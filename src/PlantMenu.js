@@ -15,7 +15,7 @@ class PlantMenu extends React.Component {
   reloadPlants(event) {
     let component = this;
 
-    jQuery.getJSON(`http://localhost:5000/plants`, function(data) {
+    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants`, function(data) {
       console.log("loaded Plantlist: " + data);
       component.setState({
         plants: data.plants
@@ -35,7 +35,7 @@ class PlantMenu extends React.Component {
 
     jQuery.ajax({
       type: "PUT",
-      url:`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots/${plantSpotId}.json`,
+      url: `https://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots/${plantSpotId}.json`,
       data: JSON.stringify({
         plant_spot: spotWithNewPlant
       }),
