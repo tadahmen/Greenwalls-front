@@ -140,7 +140,7 @@ class PlantsContainerList extends React.Component {
     return(
       <div className="plantscontainer-component">
         <div className= "plantscontainer-menu">
-          <p>Plantcontainers:</p>
+          {/*<p>Plantcontainers:</p>*/}
           {
             this.state.plantsContainers.map(function(plantsContainer, i){ //shows all plantscontainernames, each with delete button
 
