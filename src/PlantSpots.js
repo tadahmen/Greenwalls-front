@@ -163,7 +163,7 @@ class PlantSpots extends React.Component {
   render(){
     return(
       <div className="plantSpots-component">
-        <p>Plantcontainer: {this.props.plantsContainerName}</p>
+        <h4 className="container-title">Plantcontainer: {this.props.plantsContainerName}</h4>
 
         {/*<button className="addPlantSpot"
           onClick={this.createPlantSpot.bind(this)}>
