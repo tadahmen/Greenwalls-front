@@ -2,6 +2,7 @@ import React from 'react';
 import jQuery from 'jquery';
 import App from './App';
 import PlantMenu from './PlantMenu';
+import EditableText from './EditableText';
 // import PlantSpot from './PlantSpot';
 
 class PlantSpots extends React.Component {
@@ -21,7 +22,7 @@ class PlantSpots extends React.Component {
     console.log("containerId for loading PlantSpots:" + plantsContainerId);
     // console.log("(containerid in props is still old id: " + this.props.plantsContainerId + ")"); //(just to see if value in props 'received' new value from parent)
 
-    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
+    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
       component.setState({
         plantSpots: data.plant_spots,
       });
@@ -69,7 +70,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({         //posts new plantspot
       type:'POST',
-      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`,
+      url: `http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`,
       data: JSON.stringify({
         plant_spot: newPlantSpot
       }),
@@ -88,7 +89,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({ //request to db
       type: 'DELETE',
-      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
+      url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
       contentType: "application/json",
       dataType: "json"
     })
@@ -144,6 +145,30 @@ class PlantSpots extends React.Component {
     console.log("plantspot after setState: " + this.state.plantSpotPosition)
   }
 
+  updateName(newName) {
+    console.log("UPDATING NAME: " + newName)
+    let component = this;
+
+    this.setState({ plantsContainerName: newName });
+
+    jQuery.ajax({
+      type: "PATCH",
+      url: `http://localhost:5000/plants_containers/${this.props.plantsContainerId}.json`,
+      data: JSON.stringify({
+        plants_container: {name: newName, price: ""}
+      }),
+      contentType: "application/json",
+      dataType: "json"
+    })
+      .done(function(data) {
+        console.log(data);
+        component.props.onChange();
+        })
+      .fail(function(error) {
+        console.log(error);
+      });
+  }
+
   componentDidMount() {
     console.log("Mount PlantSpots");
     console.log("this.props.plants is:" + this.props.plants);
@@ -163,12 +188,11 @@ class PlantSpots extends React.Component {
   render(){
     return(
       <div className="plantSpots-component">
-        <h4 className="container-title">Plantcontainer: {this.props.plantsContainerName}</h4>
-
-        {/*<button className="addPlantSpot"
-          onClick={this.createPlantSpot.bind(this)}>
-          <p className="add-symbol"> + </p>
-        </button>*/}
+        <h4 className="container-title">Plantcontainer: &nbsp;
+          <EditableText
+            value={this.props.plantsContainerName}
+            onChange={this.updateName.bind(this)}/>
+        </h4>
 
         <div className="plantMenu">
           <PlantMenu

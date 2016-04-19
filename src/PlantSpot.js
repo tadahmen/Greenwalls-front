@@ -13,7 +13,7 @@ class PlantSpot extends React.Component {
   loadPlantPicture(plantId) {
     let component = this;
 
-    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants/${plantId}`, function(plantData) {
+    jQuery.getJSON(`http://localhost:5000/plants/${plantId}`, function(plantData) {
       console.log("loaded plant in plant spots: " + plantData.name);
       console.log("returning plantpicture: " + plantData.picture);
       component.setState({
