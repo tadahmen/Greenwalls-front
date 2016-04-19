@@ -22,7 +22,7 @@ class PlantSpots extends React.Component {
     console.log("containerId for loading PlantSpots:" + plantsContainerId);
     // console.log("(containerid in props is still old id: " + this.props.plantsContainerId + ")"); //(just to see if value in props 'received' new value from parent)
 
-    jQuery.getJSON(`http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
+    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`, function(data) { //request to db.
       component.setState({
         plantSpots: data.plant_spots,
       });
@@ -70,7 +70,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({         //posts new plantspot
       type:'POST',
-      url: `http://localhost:5000/plants_containers/${plantsContainerId}/plant_spots`,
+      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${plantsContainerId}/plant_spots`,
       data: JSON.stringify({
         plant_spot: newPlantSpot
       }),
@@ -89,7 +89,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({ //request to db
       type: 'DELETE',
-      url: `http://localhost:5000/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
+      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${event.plantsContainerId}/plant_spots/${event.plantSpotId}.json`,
       contentType: "application/json",
       dataType: "json"
     })
@@ -153,7 +153,7 @@ class PlantSpots extends React.Component {
 
     jQuery.ajax({
       type: "PATCH",
-      url: `http://localhost:5000/plants_containers/${this.props.plantsContainerId}.json`,
+      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${this.props.plantsContainerId}.json`,
       data: JSON.stringify({
         plants_container: {name: newName, price: ""}
       }),
