@@ -22,7 +22,7 @@ class PlantsContainerList extends React.Component {
     console.log("LOADING CONTAINERLIST FROM DB");
     console.log("container id after (re)loading: " + component.state.plantsContainerId)
 
-    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants_containers`, function(data) {  //request to db.
+    jQuery.getJSON(`http://localhost:5000/plants_containers`, function(data) {  //request to db.
       console.log("CONTAINERLIST LOADED: " + data);
       component.setState({
         plantsContainers: data.plants_containers,
@@ -37,7 +37,8 @@ class PlantsContainerList extends React.Component {
         console.log("total nr. of containers: " + containersTotal);
         component.setState({
           plantsContainerId: newContainer.id, //selects container. And PlantSpots' componentWillReceiveProps is called, fills it with 1 plantspot and displays it
-           newContainerCreated: false
+          plantsContainerName: newContainer.name, //>>>>>>>>>>>to show new containername
+          newContainerCreated: false
         });
       }
     });
@@ -47,7 +48,7 @@ class PlantsContainerList extends React.Component {
     let component = this;
     console.log("LOADING PLANTLIST FROM DB");
 
-    jQuery.getJSON(`http://guarded-stream-41881.herokuapp.com/plants`, function(data) {
+    jQuery.getJSON(`http://localhost:5000/plants`, function(data) {
       console.log("PLANTLIST LOADED: " + data);
       component.setState({
         plants: data.plants
@@ -75,7 +76,7 @@ class PlantsContainerList extends React.Component {
 
     jQuery.ajax({   //post request to db
       type:'POST',
-      url: `http://guarded-stream-41881.herokuapp.com/plants_containers`,
+      url: `http://localhost:5000/plants_containers`,
       data: JSON.stringify({
         plants_container: newPlantsContainer
       }),
@@ -95,7 +96,7 @@ class PlantsContainerList extends React.Component {
 
     jQuery.ajax({
       type: 'DELETE',
-      url: `http://guarded-stream-41881.herokuapp.com/plants_containers/${event}.json`,
+      url: `http://localhost:5000/plants_containers/${event}.json`,
       contentType: "application/json",
       dataType: "json"
     })
