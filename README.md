@@ -1,4 +1,4 @@
-This app is online (though under construction). You can find it at http://cartoonist-terence-43558.bitballoon.com/
+This app is online (though under construction). You can find it at http://green-bag.bitballoon.com/
 
 The idea of the application is to be able to compose a container with plants, and order it.
 The main functions of the composing part already work:
